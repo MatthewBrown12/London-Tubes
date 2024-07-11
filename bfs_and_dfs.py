@@ -13,12 +13,18 @@ def bfs(graph, start_vertex, end_vertex): #Performs a breadth first search on th
     while queue:
         current_vertex, path = queue.pop(0)
         visited.add(current_vertex)
-        for neighbor in graph[current_vertex]:
-            if neighbor not in visited:
-                if neighbor == end_vertex:
-                    return path + [neighbor]
+        neighbours = []
+        lines = []
+        for station in graph[current_vertex]:
+            stations = station.split(' - ')
+            neighbours.append(stations[0])
+            lines.append(stations[1])
+        for i in range(len(neighbours)):
+            if neighbours[i] not in visited:
+                if neighbours[i] == end_vertex:
+                    return path + [neighbours[i] + " - " + lines[i]]
                 else:
-                    queue.append([neighbor, path + [neighbor]])
+                    queue.append([neighbours[i], path + [neighbours[i] + " - " + lines[i]]])
 
 def dfs(graph, start_vertex, end_vertex, visited = None): #Performs a depth first search on the graph
     if visited == None:
